@@ -5,15 +5,15 @@ import re
 test_string = '1,3,5-TRIS(2-HYDROXYETHYL) HEXAHYDRO-S-TRIAZINE, 1,2-DICHLOROBENZENE,METHANOL,KETHANOL, 1,2-DICHLOROBENZENE'
 
 splitted_list = test_string.split(',')
-chemical_lst = []
 
+chemical_lst = []
 tmp_lst = []
-counter = 1
+
 for item in splitted_list:
-    if counter == 1:
+    
+    if item == splitted_list[0]:
         tmp_lst.append(item)
         chemical_lst.append(item)
-        counter += 1
         continue
     
     # print('last item ', tmp_lst[-1:][0])
@@ -29,9 +29,7 @@ for item in splitted_list:
 
     
     if re.search("\d", tmp_lst[-1:][0][-2:]):
-        print('in if - char is : ',tmp_lst[-1:][0][0])
         if tmp_lst[-1:][0][0] == ' ':
-            print('inside')
             chemical_lst.pop()
             tmp = ''.join(map(str, tmp_lst[-1:][0]))
             current_val = item
@@ -56,5 +54,5 @@ for item in splitted_list:
        
 
         # print('in else ', tmp_lst)
-    print('chemical list: ',chemical_lst)
+print('chemical list: ',chemical_lst)
 
