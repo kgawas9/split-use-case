@@ -2,7 +2,9 @@ import re
 
 # test_string = '2-dimethylaminoethanol, 2-[(2-[2-(dimethylamino)ethoxy]ethyl)methylamino]ethanol'
 # test_string = 'METHANOL,KETHANOL, 1,2-DICHLOROBENZENE'
-test_string = '1,3,5-TRIS(2-HYDROXYETHYL) HEXAHYDRO-S-TRIAZINE, 1,2-DICHLOROBENZENE,METHANOL,KETHANOL, 1,2-DICHLOROBENZENE'
+# test_string = '1,3,5-TRIS(2-HYDROXYETHYL) HEXAHYDRO-S-TRIAZINE, 1,2-DICHLOROBENZENE,METHANOL,KETHANOL, 1,2-DICHLOROBENZENE'
+# test_string = 'Nickle Charoride (NiCl2), Hydrochloric acid'
+test_string = 'D009, D008'
 
 splitted_list = test_string.split(',')
 
@@ -41,16 +43,26 @@ for item in splitted_list:
             # print('string : ',st)
             # print('break point found')
         else:
+            is_num = False
+            for char in tmp_lst[-1:][0][-3:]:
+                if re.search('\d', char):
+                    is_num = True
+                    break
+            
             tmp_lst.append(item)
-            chemical_lst.pop()
-            chemical_lst.append(','.join(tmp_lst))
+
+            if is_num:
+                chemical_lst.append(item.strip())
+            else:    
+                chemical_lst.pop()
+                chemical_lst.append(','.join(tmp_lst))
             # print(chemical_lst)
             # print(tmp.strip() + ","+ current_val)
 
     else:
         # break
         tmp_lst.append(item)
-        chemical_lst.append(item)
+        chemical_lst.append(item.strip())
        
 
         # print('in else ', tmp_lst)
